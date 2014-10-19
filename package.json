@@ -1,0 +1,19 @@
+{
+  "name": "ember-flexure",
+  "version": "0.0.1",
+  "description": "alternative model tools for ember.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chrisfarber/ember-flexure.git"
+  },
+  "author": "Chris Farber",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/chrisfarber/ember-flexure/issues"
+  },
+  "homepage": "https://github.com/chrisfarber/ember-flexure"
+}
