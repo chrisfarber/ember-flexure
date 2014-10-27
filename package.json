@@ -15,5 +15,13 @@
   "bugs": {
     "url": "https://github.com/chrisfarber/ember-flexure/issues"
   },
-  "homepage": "https://github.com/chrisfarber/ember-flexure"
+  "homepage": "https://github.com/chrisfarber/ember-flexure",
+  "devDependencies": {
+    "broccoli": "^0.13.2",
+    "broccoli-coffee": "^0.1.2",
+    "broccoli-es6-module-transpiler": "^0.4.0",
+    "broccoli-file-mover": "^0.4.2",
+    "broccoli-merge-trees": "^0.2.1",
+    "broccoli-static-compiler": "^0.2.1"
+  }
 }
