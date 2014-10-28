@@ -6,7 +6,7 @@ var moveFile      = require('broccoli-file-mover');
 
 var source = pickFiles("src", {
   srcDir: "/",
-  files: ["**/*.coffee"],
+  files: ["**/*.coffee", "**/*.js"],
   destDir: "/flexure"
 });
 
