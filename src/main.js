@@ -18,6 +18,10 @@ import BooleanTransform from "flexure/transforms/boolean";
 import StringTransform from "flexure/transforms/string";
 import NumberTransform from "flexure/transforms/number";
 
+import API from "flexure/api";
+
+import "flexure/flexure_initializer";
+
 EF.Model = Model;
 EF.Errors = Errors;
 
@@ -28,23 +32,13 @@ EF.hasPolymorphic = hasPolymorphic;
 
 EF.RelationshipArray = RelationshipArray;
 
+EF.Models = Models;
+
 EF.Transform = Transform;
 EF.BooleanTransform = BooleanTransform;
 EF.StringTransform = StringTransform;
 EF.NumberTransform = NumberTransform;
 
-window.EF = EF;
+EF.API = API;
 
-Ember.Application.initializer({
-  name: "ember-flexure",
-  initialize: function(container) {
-    container.register("transform:_default", EF.Transform);
-    container.register("transform:boolean", EF.BooleanTransform);
-    container.register("transform:string", EF.StringTransform);
-    container.register("transform:number", EF.NumberTransform);
-
-    container.register("flexure:models", EF.Models);
-    container.inject("route", "models", "flexure:models");
-    container.inject("controller", "models", "flexure:models");
-  }
-});
+export default EF;

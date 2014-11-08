@@ -25,7 +25,7 @@ hasMany = (model, meta={}) ->
     meta = {}
   prop = ((k, v) ->
     storage = @_rawRead k, =>
-      @models.createRelationshipArray model, []
+      @models.makeRelationshipArray model, []
     if arguments.length > 1
       storage.set("[]", Ember.A(v))
     else

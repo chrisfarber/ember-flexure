@@ -55,3 +55,5 @@ Models = Ember.Object.extend
 
     t = @container.lookup("transform:#{type}") || @container.lookup("transform:_default")
     t.serialize value
+
+`export default Models`
