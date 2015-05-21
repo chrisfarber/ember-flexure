@@ -1,35 +1,21 @@
-var pickFiles     = require("broccoli-static-compiler");
-var coffee        = require("broccoli-coffee");
-var es6           = require("broccoli-es6-module-transpiler");
-var merge         = require("broccoli-merge-trees");
-var moveFile      = require("broccoli-file-mover");
-var concat        = require("broccoli-concat");
-var AMDFormatter  = require("es6-module-transpiler-amd-formatter");
+/* jshint node: true */
+/* global require, module */
 
-var source = pickFiles("src", {
-  srcDir: "/",
-  files: ["**/*.coffee", "**/*.js"],
-  destDir: "/flexure"
-});
+var EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
 
-source = coffee(source, {
-  bare: true,
-});
+var app = new EmberAddon();
 
-var AMDBuild = es6(source, {
-  formatter: new AMDFormatter()
-});
+// Use `app.import` to add additional libraries to the generated
+// output files.
+//
+// If you need to use different assets in different
+// environments, specify an object as the first parameter. That
+// object's keys should be the environment name and the values
+// should be the asset to use in that environment.
+//
+// If the library that you are including contains AMD or ES6
+// modules that you would like to import into your application
+// please specify an object with the list of modules as keys
+// along with the exports of each module as its value.
 
-AMDBuild = concat(AMDBuild, {
-  inputFiles: ["**/*.js"],
-  separator: "\n",
-  outputFile: "/ember-flexure.amd.js"
-});
-
-var globalBuild = es6(source, {
-  formatter: "bundle",
-  output: "ember-flexure.js"
-});
-
-
-module.exports = merge([globalBuild, AMDBuild]);
+module.exports = app.toTree();
