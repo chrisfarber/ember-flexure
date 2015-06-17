@@ -4,8 +4,12 @@ export function attr(type = null, meta = {}) {
   if (Ember.typeOf(meta) !== "object") {
     meta = {default: meta};
   }
-  return function(k, v) {
-    if (arguments.length > 1) {
+  return Ember.computed({
+    get(k) {
+      return this._rawRead(k, () => meta.default);
+    },
+
+    set(k, v) {
       if (type) {
         v = this.models.deserialize(type, v);
       }
@@ -17,10 +21,7 @@ export function attr(type = null, meta = {}) {
       }
       return this._rawWrite(k, v);
     }
-    else {
-      return this._rawRead(k, function() { return meta.default; });
-    }
-  }.property().meta({
+  }).meta({
     EF_Required: meta.required,
     EF_Attr: true,
     EF_Relationship: meta.relationship,
@@ -40,17 +41,21 @@ export function hasMany(model, meta = {}) {
     meta = {};
   }
 
-  return function(k, v) {
-    var storage = this._rawRead(k, () => {
-      return this.models.makeRelationshipArray(model, []);
+  let getStorage = (m, k) => {
+    return m._rawRead(k, () => {
+      return m.models.makeRelationshipArray(m, []);
     });
-    if (arguments.length > 1) {
-      return storage.set("[]", Ember.A(v));
+  };
+
+  return Ember.computed({
+    get(k) {
+      return getStorage(this, k);
+    },
+
+    set(k, v) {
+      return getStorage(this, k).set("[]", Ember.A(v));
     }
-    else {
-      return storage;
-    }
-  }.property().meta({
+  }).meta({
     EF_Attr: true,
     EF_Relationship: true
   });
@@ -58,21 +63,22 @@ export function hasMany(model, meta = {}) {
 
 export function hasPolymorphic(modelDeterminator, ...dependentKeys) {
   var meta = {};
-  return function(k, v) {
-    var modelClassName = modelDeterminator.call(this);
-    var val;
-    if (arguments.length > 1) {
+  return Ember.computed(...dependentKeys, {
+    get(k) {
+      let modelClassName = modelDeterminator.call(this);
+      let val = this.models.ensureSpecificModel(modelClassName, this._rawRead(k, () => meta.default));
+      return this._rawWrite(k, val);
+    },
+
+    set(k, v) {
+      let modelClassName = modelDeterminator.call(this);
       if (meta.readOnly && this.get("__locked")) {
         Ember.assert(`Cannot set read-only property $(k) to $(v)`);
       }
-      val = this.models.ensureSpecificModel(modelClassName, v);
+      let val = this.models.ensureSpecificModel(modelClassName, v);
       return this._rawWrite(k, val);
     }
-    else {
-      val = this.models.ensureSpecificModel(modelClassName, this._rawRead(k, () => meta.default));
-      return this._rawWrite(k, val);
-    }
-  }.property(...dependentKeys).meta({
+  }).meta({
     EF_Attr: true,
     EF_Relationship: true
   });
