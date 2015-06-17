@@ -31,7 +31,7 @@ let Model = Ember.Object.extend(Ember.Copyable, {
 
   attributes: function() {
     let attrs = [{name: "id", value: this.get("id"), meta: {}}];
-    this.constructor.eachComputedProperty(function(name, propertyMetadata) {
+    this.constructor.eachComputedProperty((name, propertyMetadata) => {
       attrs.addObject({name: name, value: this.get(name), meta: propertyMetadata});
     });
     return attrs;
