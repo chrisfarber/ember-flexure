@@ -43,7 +43,7 @@ export function hasMany(model, meta = {}) {
 
   let getStorage = (m, k) => {
     return m._rawRead(k, () => {
-      return m.models.makeRelationshipArray(m, []);
+      return m.models.makeRelationshipArray(model, []);
     });
   };
 
