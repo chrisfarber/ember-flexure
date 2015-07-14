@@ -4,13 +4,20 @@ export function attr(type = null, meta = {}) {
   if (Ember.typeOf(meta) !== "object") {
     meta = {default: meta};
   }
+
+  if (meta.nullable === undefined) {
+    meta.nullable = true;
+  }
+
+  let allowNull = !!meta.nullable;
+
   return Ember.computed({
     get(k) {
       return this._rawRead(k, () => meta.default);
     },
 
     set(k, v) {
-      if (type) {
+      if (type && !(allowNull && (v === undefined || v === null))) {
         v = this.models.deserialize(type, v);
       }
       if (meta.readOnly && this.get("__locked")) {
