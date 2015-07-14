@@ -57,7 +57,11 @@ export default Ember.Object.extend({
     }
   },
 
-  deserialize: function(type, value) {
+  deserialize: function(type, value, allowNull = true) {
+    if (allowNull && (value === undefined || value === null)) {
+      return value;
+    }
+
     if (Ember.isEmpty(type)) {
       type = "_default";
     }
@@ -67,7 +71,11 @@ export default Ember.Object.extend({
     return t.deserialize(value);
   },
 
-  serialize: function(type, value) {
+  serialize: function(type, value, allowNull = true) {
+    if (allowNull && (value === undefined || value === null)) {
+      return value;
+    }
+
     if (Ember.isEmpty(type)) {
       type = "_default";
     }

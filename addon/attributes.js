@@ -17,8 +17,8 @@ export function attr(type = null, meta = {}) {
     },
 
     set(k, v) {
-      if (type && !(allowNull && (v === undefined || v === null))) {
-        v = this.models.deserialize(type, v);
+      if (type) {
+        v = this.models.deserialize(type, v, allowNull);
       }
       if (meta.readOnly && this.get("__locked")) {
         Ember.assert(`Cannot set read-only property $(k) to $(v)`);
@@ -32,7 +32,8 @@ export function attr(type = null, meta = {}) {
     EF_Required: meta.required,
     EF_Attr: true,
     EF_Relationship: meta.relationship,
-    EF_Type: type
+    EF_Type: type,
+    EF_AllowNull: allowNull
   });
 }
 

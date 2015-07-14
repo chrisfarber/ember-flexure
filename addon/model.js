@@ -48,7 +48,7 @@ let Model = Ember.Object.extend(Ember.Copyable, {
           }
         }
         else {
-          serializedValue = this.models.serialize(attr.meta.EF_Type, attr.value);
+          serializedValue = this.models.serialize(attr.meta.EF_Type, attr.value, attr.meta.EF_AllowNull);
         }
         serialized[attr.name] = serializedValue;
       }
