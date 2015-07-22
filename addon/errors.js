@@ -39,7 +39,9 @@ export default Ember.Object.extend(Ember.Evented, {
     }
   },
 
-  content: Ember.computed(() => {}),
+  content: function() {
+    return {};
+  }.property().readOnly(),
 
   _storageFor: function(attribute) {
     let content = this.get("content");
