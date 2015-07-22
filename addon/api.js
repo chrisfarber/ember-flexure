@@ -1,5 +1,5 @@
 import Ember from "ember";
-import $ from "jquery";
+import ic from "ic-ajax";
 
 export default Ember.Object.extend({
   host: null,
@@ -39,6 +39,6 @@ export default Ember.Object.extend({
         ajaxOpts.data = opts.data;
       }
     }
-    return $.ajax(ajaxOpts);
+    return ic.ajax.request(ajaxOpts);
   }
 });
