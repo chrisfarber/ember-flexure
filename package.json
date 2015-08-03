@@ -1,6 +1,6 @@
 {
   "name": "ember-flexure",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "A simple model framework for Ember.js",
   "directories": {
     "doc": "doc",
