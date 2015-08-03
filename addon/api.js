@@ -21,6 +21,7 @@ export default Ember.Object.extend({
 
     var ajaxOpts = {
       type: opts.type || "GET",
+      cache: !!opts.cache,
       url: fullURL,
       contentType: opts.contentType || "application/json",
       dataType: opts.dataType || "json",
