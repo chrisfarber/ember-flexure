@@ -1,4 +1,4 @@
-import _ from 'lodash/lodash';
+var _ = require('lodash');
 
 /**
  * EX: `ember generate model foo --author="johndoe"`
