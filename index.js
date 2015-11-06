@@ -2,5 +2,9 @@
 'use strict';
 
 module.exports = {
-  name: 'ember-flexure'
+  name: 'ember-flexure',
+
+  isDevelopingAddon: function() {
+    return true;
+  }
 };
