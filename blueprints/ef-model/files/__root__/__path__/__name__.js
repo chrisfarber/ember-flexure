@@ -3,7 +3,7 @@ import EF from 'ember-flexure';
 /**
  * Description
  *
- * @name <%= moduleName %>
+ * @name <%= camelizedModuleName %>
  * @author <%= author %>
  */
 export default EF.Model.extend({
