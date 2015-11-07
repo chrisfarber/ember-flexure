@@ -2,8 +2,9 @@ import RelationshipArray from "./relationship_array";
 import Ember from "ember";
 
 export default Ember.Object.extend({
+
   make: function(nameOrClass, properties = {}) {
-    var modelClass = nameOrClass;
+    let modelClass = nameOrClass;
     if (Ember.typeOf(nameOrClass) !== "class") {
       modelClass = this.findModel(nameOrClass);
     }
@@ -19,7 +20,7 @@ export default Ember.Object.extend({
   },
 
   makeRelationshipArray: function(modelName, content) {
-    let array = RelationshipArray.create({content: content, models: this});
+    let array = RelationshipArray.create({ content: content, models: this });
     array.set("model", modelName);
     return array;
   },
@@ -85,4 +86,3 @@ export default Ember.Object.extend({
     return t.serialize(value);
   }
 });
-

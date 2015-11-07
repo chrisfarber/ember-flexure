@@ -7,19 +7,19 @@ export default Ember.Object.extend({
   headers: {},
 
   __pathAdjuster: function() {
-    var host = this.get("host");
-    var baseURL = this.get("baseURL");
-    var prefix = [host, baseURL].removeObject(null);
+    let host = this.get("host");
+    let baseURL = this.get("baseURL");
+    let prefix = [host, baseURL].removeObject(null);
     return function (path) {
       return prefix.concat(path).join("/");
     };
   }.property("host", "baseURL"),
 
   request: function(opts = {}) {
-    var absoluteURL = opts.absoluteURL;
-    var fullURL = Ember.isPresent(absoluteURL) ? absoluteURL : this.get("__pathAdjuster")(opts.path);
+    let absoluteURL = opts.absoluteURL;
+    let fullURL = Ember.isPresent(absoluteURL) ? absoluteURL : this.get("__pathAdjuster")(opts.path);
 
-    var ajaxOpts = {
+    let ajaxOpts = {
       type: opts.type || "GET",
       cache: !!opts.cache,
       url: fullURL,

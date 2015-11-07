@@ -115,7 +115,7 @@ export default EF.API.extend({
   }
 
   findPerson: function(name) {
-    var models = this.models;
+    let models = this.models;
 
     return this.request({
       type: "GET", //default

@@ -70,7 +70,7 @@ export function hasMany(model, meta = {}) {
 }
 
 export function hasPolymorphic(modelDeterminator, ...dependentKeys) {
-  var meta = {};
+  let meta = {};
   return Ember.computed(...dependentKeys, {
     get(k) {
       let modelClassName = modelDeterminator.call(this);
