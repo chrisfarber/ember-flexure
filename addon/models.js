@@ -39,23 +39,13 @@ export default Ember.Object.extend({
   },
 
   ensureSpecificModel: function(name, object = {}) {
-    var modelClass = this.findModel(name);
-    if (name && object) {
-      if (Ember.typeOf(object) !== "instance") {
-        return this.make(name, object);
-      }
-      else {
-        if (object.constructor === modelClass) {
-          return object;
-        }
-        else {
-          return this.make(name);
-        }
-      }
-    }
-    else {
-      return null;
-    }
+    if (!name || !object) return null;
+    if (Ember.typeOf(object) !== "instance") return this.make(name, object);
+
+    let modelClass = this.findModel(name);
+    if (object.constructor === modelClass) return object;
+
+    return this.make(name);
   },
 
   deserialize: function(type, value, allowNull = true) {
