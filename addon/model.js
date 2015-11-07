@@ -1,7 +1,7 @@
 import Errors from "./errors";
 import Ember from "ember";
 
-let Model = Ember.Object.extend(Ember.Copyable, {
+let Model = Ember.Object.extend({
   awaken: function() {
     // This method is called after the model has been fully set-up, including properties
     // Here we simply stub it out.
