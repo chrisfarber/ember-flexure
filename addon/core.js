@@ -2,7 +2,7 @@ import Ember from "ember";
 
 import API from "ember-flexure/api";
 import Model from "ember-flexure/model";
-import { attr, hasOne, hasMany, hasPolymorphic } from "ember-flexure/attributes";
+import { attr, hasOne, hasMany, hasManyPolymorphic, hasPolymorphic } from "ember-flexure/attributes";
 
 let EmberFlexure = Ember.Namespace.create({
   API: API,
@@ -11,7 +11,8 @@ let EmberFlexure = Ember.Namespace.create({
   attr: attr,
   hasOne: hasOne,
   hasMany: hasMany,
-  hasPolymorphic: hasPolymorphic
+  hasPolymorphic: hasPolymorphic,
+  hasManyPolymorphic: hasManyPolymorphic
 });
 
 export default EmberFlexure;

@@ -69,6 +69,27 @@ export function hasMany(model, meta = {}) {
   });
 }
 
+export function hasManyPolymorphic(modelDeterminator) {
+  let getStorage = (m, k) => {
+    return m._rawRead(k, () => {
+      return m.models.makePolymorphicRelationshipArray(modelDeterminator, []);
+    });
+  };
+
+  return Ember.computed({
+    get(k) {
+      return getStorage(this, k);
+    },
+
+    set(k, v) {
+      return getStorage(this, k).set("[]", Ember.A(v));
+    }
+  }).meta({
+    EF_Attr: true,
+    EF_Relationship: true
+  });
+}
+
 export function hasPolymorphic(modelDeterminator, ...dependentKeys) {
   var meta = {};
   return Ember.computed(...dependentKeys, {

@@ -1,4 +1,5 @@
 import RelationshipArray from "./relationship_array";
+import PolymorphicRelationshipArray from "./polymorphic_relationship_array";
 import Ember from "ember";
 
 export default Ember.Object.extend({
@@ -23,6 +24,12 @@ export default Ember.Object.extend({
     array.set("model", modelName);
     return array;
   },
+
+  makePolymorphicRelationshipArray: function(modelDeterminator, content) {
+    let array = PolymorphicRelationshipArray.create({content: content, models: this});
+    array.set("modelDeterminator", modelDeterminator);
+    return array;
+  },  
 
   findModel: function(name) {
     return this.container.lookupFactory(`model:${name}`);
