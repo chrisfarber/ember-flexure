@@ -11,7 +11,7 @@ export default Ember.Object.extend({
 
     return modelClass._create({
       models: this,
-      container: this.container
+      owner: Ember.getOwner(this)
     }).tap((model) => {
       model.setProperties(properties);
       model._verifyRequiredFields();
@@ -29,10 +29,10 @@ export default Ember.Object.extend({
     let array = PolymorphicRelationshipArray.create({content: content, models: this});
     array.set("modelDeterminator", modelDeterminator);
     return array;
-  },  
+  },
 
   findModel: function(name) {
-    return this.container.lookupFactory(`model:${name}`);
+    return Ember.getOwner(this).resolveRegistration(`model:${name}`);
   },
 
   ensureModel: function(name, object) {
@@ -73,8 +73,8 @@ export default Ember.Object.extend({
       type = "_default";
     }
 
-    let t = this.container.lookup(`transform:${type}`) ||
-            this.container.lookup("transform:_default");
+    let t = Ember.getOwner(this).lookup(`transform:${type}`) ||
+            Ember.getOwner(this).lookup("transform:_default");
     return t.deserialize(value);
   },
 
@@ -87,8 +87,8 @@ export default Ember.Object.extend({
       type = "_default";
     }
 
-    let t = this.container.lookup(`transform:${type}`) ||
-            this.container.lookup("transform:_default");
+    let t = Ember.getOwner(this).lookup(`transform:${type}`) ||
+            Ember.getOwner(this).lookup("transform:_default");
     return t.serialize(value);
   }
 });
