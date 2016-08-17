@@ -25,12 +25,12 @@ let Model = Ember.Object.extend(Ember.Copyable, {
     return data[k] = v;
   },
 
-  hasID: function() {
-    return !Ember.isEmpty(this.get("id"));
-  }.property("id"),
+  // hasID: function() {
+  //   return !Ember.isEmpty(this.get("id"));
+  // }.property("id"),
 
   attributes: function() {
-    let attrs = [{name: "id", value: this.get("id"), meta: {}}];
+    let attrs = []; //[{name: "id", value: this.get("id"), meta: {}}];
     this.constructor.eachComputedProperty((name, propertyMetadata) => {
       attrs.addObject({name: name, value: this.get(name), meta: propertyMetadata});
     });
@@ -40,7 +40,7 @@ let Model = Ember.Object.extend(Ember.Copyable, {
   serialize: function() {
     let serialized = {};
     this.attributes().forEach((attr) => {
-      if (attr.meta.EF_Attr || attr.name === "id") {
+      if (attr.meta.EF_Attr) {// || attr.name === "id") {
         var serializedValue = null;
         if (attr.meta.EF_Relationship) {
           if (attr.value) {
