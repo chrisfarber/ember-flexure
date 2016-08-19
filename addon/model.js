@@ -41,7 +41,7 @@ let Model = Ember.Object.extend(Ember.Copyable, {
     let serialized = {};
     this.attributes().forEach((attr) => {
       if (attr.meta.EF_Attr) {// || attr.name === "id") {
-        var serializedValue = null;
+        var serializedValue; // undefined;
         if (attr.meta.EF_Relationship) {
           if (attr.value) {
             serializedValue = attr.value.serialize();
