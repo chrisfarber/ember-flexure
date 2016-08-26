@@ -24,7 +24,9 @@ export function attr(type = null, meta = {}) {
         Ember.assert(`Cannot set read-only property $(k) to $(v)`);
       }
       if (meta.class) {
-        v = this.models.ensureModel(meta.class, v);
+        if (!!v || meta.required) {
+          v = this.models.ensureModel(meta.class, v);
+        }
       }
       return this._rawWrite(k, v);
     }

@@ -36,7 +36,7 @@ export default Ember.Object.extend({
   },
 
   ensureModel: function(name, object) {
-    if (!!object && Ember.typeOf(object) !== "instance") {
+    if (Ember.typeOf(object) !== "instance") {
       return this.make(name, object);
     }
     else {
