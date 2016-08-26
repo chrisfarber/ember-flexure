@@ -41,7 +41,11 @@ export default Ember.Object.extend({
   },
 
   findModel: function(name) {
-    return owner(this).resolveRegistration(`model:${name}`);
+    if (!!Ember.getOwner) {
+      return Ember.getOwner(this).resolveRegistration(`model:${name}`);
+    } else {
+      return this.container.lookupFactory(`model:${name}`);
+    }
   },
 
   ensureModel: function(name, object) {
