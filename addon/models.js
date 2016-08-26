@@ -2,6 +2,8 @@ import RelationshipArray from "./relationship_array";
 import PolymorphicRelationshipArray from "./polymorphic_relationship_array";
 import Ember from "ember";
 
+let SEQ_ID = 0;
+
 export default Ember.Object.extend({
   make: function(nameOrClass, properties = {}) {
     var modelClass = nameOrClass;
@@ -16,6 +18,9 @@ export default Ember.Object.extend({
       model.setProperties(properties);
       model._verifyRequiredFields();
       model.awaken();
+
+      SEQ_ID += 1;
+      model.__flexure_seq_id = SEQ_ID;
     });
   },
 
