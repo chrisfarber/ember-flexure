@@ -4,6 +4,10 @@ import Ember from "ember";
 
 let SEQ_ID = 0;
 
+function owner(x) {
+  return Ember.getOwner ? Ember.getOwner(x) : x.container;
+}
+
 export default Ember.Object.extend({
   make: function(nameOrClass, properties = {}) {
     var modelClass = nameOrClass;
@@ -13,7 +17,7 @@ export default Ember.Object.extend({
 
     return modelClass._create({
       models: this,
-      owner: Ember.getOwner(this)
+      owner: owner(this)
     }).tap((model) => {
       model.setProperties(properties);
       model._verifyRequiredFields();
@@ -37,7 +41,7 @@ export default Ember.Object.extend({
   },
 
   findModel: function(name) {
-    return Ember.getOwner(this).resolveRegistration(`model:${name}`);
+    return owner(this).resolveRegistration(`model:${name}`);
   },
 
   ensureModel: function(name, object) {
@@ -78,8 +82,8 @@ export default Ember.Object.extend({
       type = "_default";
     }
 
-    let t = Ember.getOwner(this).lookup(`transform:${type}`) ||
-            Ember.getOwner(this).lookup("transform:_default");
+    let t = owner(this).lookup(`transform:${type}`) ||
+            owner(this).lookup("transform:_default");
     return t.deserialize(value);
   },
 
@@ -92,8 +96,8 @@ export default Ember.Object.extend({
       type = "_default";
     }
 
-    let t = Ember.getOwner(this).lookup(`transform:${type}`) ||
-            Ember.getOwner(this).lookup("transform:_default");
+    let t = owner(this).lookup(`transform:${type}`) ||
+            owner(this).lookup("transform:_default");
     return t.serialize(value);
   }
 });
