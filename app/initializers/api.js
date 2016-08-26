@@ -1,6 +1,11 @@
+function inject(app, type, name, path) {
+  const fun = app.inject || app.injection;
+  fun.bind(app)(type, name, path);
+}
+
 export function initialize(application) {
-  application.inject("route", "api", "api:main");
-  application.inject("controller", "api", "api:main");
+  inject(application, "route", "api", "api:main");
+  inject(application, "controller", "api", "api:main");
 }
 
 export default {

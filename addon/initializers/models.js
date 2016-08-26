@@ -1,13 +1,18 @@
 import Models from "../models";
 import Transform from "../transform";
 
+function inject(app, type, name, path) {
+  const fun = app.inject || app.injection;
+  fun.bind(app)(type, name, path);
+}
+
 export function initialize(application) {
   application.register("transform:_default", Transform);
 
   application.register("service:flexureModels", Models);
-  application.inject("route", "models", "service:flexureModels");
-  application.inject("controller", "models", "service:flexureModels");
-  application.inject("api", "models", "service:flexureModels");
+  inject(application, "route", "models", "service:flexureModels");
+  inject(application, "controller", "models", "service:flexureModels");
+  inject(application, "api", "models", "service:flexureModels");
 }
 
 export default {
