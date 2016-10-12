@@ -8,7 +8,7 @@ function owner(x) {
   return Ember.getOwner ? Ember.getOwner(x) : x.container;
 }
 
-export default Ember.Object.extend({
+export default Ember.Service.extend({
   make: function(nameOrClass, properties = {}) {
     var modelClass = nameOrClass;
     if (Ember.typeOf(nameOrClass) !== "class") {
@@ -105,4 +105,3 @@ export default Ember.Object.extend({
     return t.serialize(value);
   }
 });
-
