@@ -24,7 +24,9 @@ export function attr(type = null, meta = {}) {
         Ember.assert(`Cannot set read-only property $(k) to $(v)`);
       }
       if (meta.class) {
-        v = this.models.ensureModel(meta.class, v);
+        if (!!v || !allowNull) {
+          v = this.models.ensureModel(meta.class, v);
+        }
       }
       return this._rawWrite(k, v);
     }
@@ -61,7 +63,11 @@ export function hasMany(model, meta = {}) {
     },
 
     set(k, v) {
-      return getStorage(this, k).set("[]", Ember.A(v));
+      const storage = getStorage(this, k);
+      // return value of set is input value, not
+      // transformed value
+      storage.set("[]", Ember.A(v));
+      return storage.get("[]");
     }
   }).meta({
     EF_Attr: true,

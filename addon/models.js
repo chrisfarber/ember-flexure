@@ -2,7 +2,13 @@ import RelationshipArray from "./relationship_array";
 import PolymorphicRelationshipArray from "./polymorphic_relationship_array";
 import Ember from "ember";
 
-export default Ember.Object.extend({
+let SEQ_ID = 0;
+
+function owner(x) {
+  return Ember.getOwner ? Ember.getOwner(x) : x.container;
+}
+
+export default Ember.Service.extend({
   make: function(nameOrClass, properties = {}) {
     var modelClass = nameOrClass;
     if (Ember.typeOf(nameOrClass) !== "class") {
@@ -11,11 +17,14 @@ export default Ember.Object.extend({
 
     return modelClass._create({
       models: this,
-      container: this.container
+      owner: owner(this)
     }).tap((model) => {
       model.setProperties(properties);
       model._verifyRequiredFields();
       model.awaken();
+
+      SEQ_ID += 1;
+      model.__flexure_seq_id = SEQ_ID;
     });
   },
 
@@ -29,10 +38,14 @@ export default Ember.Object.extend({
     let array = PolymorphicRelationshipArray.create({content: content, models: this});
     array.set("modelDeterminator", modelDeterminator);
     return array;
-  },  
+  },
 
   findModel: function(name) {
-    return this.container.lookupFactory(`model:${name}`);
+    if (!!Ember.getOwner) {
+      return Ember.getOwner(this).resolveRegistration(`model:${name}`);
+    } else {
+      return this.container.lookupFactory(`model:${name}`);
+    }
   },
 
   ensureModel: function(name, object) {
@@ -73,8 +86,8 @@ export default Ember.Object.extend({
       type = "_default";
     }
 
-    let t = this.container.lookup(`transform:${type}`) ||
-            this.container.lookup("transform:_default");
+    let t = owner(this).lookup(`transform:${type}`) ||
+            owner(this).lookup("transform:_default");
     return t.deserialize(value);
   },
 
@@ -87,9 +100,8 @@ export default Ember.Object.extend({
       type = "_default";
     }
 
-    let t = this.container.lookup(`transform:${type}`) ||
-            this.container.lookup("transform:_default");
+    let t = owner(this).lookup(`transform:${type}`) ||
+            owner(this).lookup("transform:_default");
     return t.serialize(value);
   }
 });
-
