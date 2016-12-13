@@ -16,9 +16,9 @@ export default Ember.Service.extend({
     }
 
     return modelClass._create({
-      models: this,
-      owner: owner(this)
+      models: this
     }).tap((model) => {
+      Ember.setOwner(model, owner(this));
       model.setProperties(properties);
       model._verifyRequiredFields();
       model.awaken();
