@@ -88,7 +88,11 @@ export function hasManyPolymorphic(modelDeterminator) {
     },
 
     set(k, v) {
-      return getStorage(this, k).set("[]", Ember.A(v));
+      const storage = getStorage(this, k);
+      // return value of set is input value, not
+      // transformed value
+      storage.set("[]", Ember.A(v));
+      return storage.get("[]");
     }
   }).meta({
     EF_Attr: true,
