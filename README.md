@@ -47,7 +47,7 @@ export default EF.Model.extend({
 
 export default EF.Model.extend({
   name: EF.attr("string"),
-  skill: Ef.attr("number"),
+  skill: EF.attr("number"),
 });
 ```
 
